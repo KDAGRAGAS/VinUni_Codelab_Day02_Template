@@ -1,0 +1,66 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 842 595] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>
+endobj
+4 0 obj
+<< /Length 750 >>
+stream
+0.9 0.95 1.0 rg 0 0 842 595 re f
+0.1 0.2 0.5 rg /F1 20 Tf 50 540 Td (Vin Smart Future - Xanh SM Intelligent Dispatching Workflow) Tj
+0.2 0.2 0.2 rg /F1 12 Tf 50 515 Td (As-Is vs To-Be Operational Flowchart for EV Charging Assistance) Tj
+
+0.8 0.2 0.2 rg /F1 14 Tf 50 460 Td ([As-Is Workflow] - Manual 15 min / incident) Tj
+0.7 0.8 0.9 rg 50 380 120 60 re f 0.1 0.2 0.4 RG 2 w 50 380 120 60 re s
+0 0 0 rg /F1 10 Tf 60 415 Td (Step 1: Receive) Tj 60 400 Td (Incident Call) Tj
+
+0.7 0.8 0.9 rg 200 380 120 60 re f 0.1 0.2 0.4 RG 200 380 120 60 re s
+0 0 0 rg /F1 10 Tf 210 415 Td (Step 2: Lookup) Tj 210 400 Td (GPS Tracking) Tj
+
+1.0 0.8 0.8 rg 350 380 130 60 re f 0.8 0.1 0.1 RG 350 380 130 60 re s
+0.8 0 0 rg /F1 10 Tf 360 415 Td (Step 3: Bottleneck) Tj 0 0 0 rg 360 400 Td (Station Search) Tj
+
+1.0 0.8 0.8 rg 510 380 130 60 re f 0.8 0.1 0.1 RG 510 380 130 60 re s
+0.8 0 0 rg /F1 10 Tf 520 415 Td (Step 4: Bottleneck) Tj 0 0 0 rg 520 400 Td (Manual SMS Draft) Tj
+
+0.7 0.8 0.9 rg 670 380 120 60 re f 0.1 0.2 0.4 RG 670 380 120 60 re s
+0 0 0 rg /F1 10 Tf 680 415 Td (Step 5: Dispatch) Tj 680 400 Td (Driver Notified) Tj
+
+0.1 0.6 0.2 rg /F1 14 Tf 50 290 Td ([To-Be Workflow with AI Co-pilot] - Under 2 min / incident) Tj
+0.8 0.9 0.8 rg 50 200 130 60 re f 0.1 0.5 0.2 RG 2 w 50 200 130 60 re s
+0 0 0 rg /F1 10 Tf 60 235 Td (Step 1: Automated) Tj 60 220 Td (Telemetry Alert) Tj
+
+0.8 0.9 0.8 rg 220 200 150 60 re f 0.1 0.5 0.2 RG 220 200 150 60 re s
+0 0 0 rg /F1 10 Tf 230 235 Td (Step 2: Auto Query) Tj 230 220 Td (GPS & Vacant Plugs) Tj
+
+0.7 0.85 1.0 rg 410 200 160 60 re f 0.1 0.3 0.8 RG 410 200 160 60 re s
+0 0 0.8 rg /F1 10 Tf 420 235 Td (Step 3: AI Co-pilot) Tj 0 0 0 rg 420 220 Td ([DRAFT_ONLY] Gen) Tj
+
+0.8 0.9 0.8 rg 610 200 150 60 re f 0.1 0.5 0.2 RG 610 200 150 60 re s
+0 0 0 rg /F1 10 Tf 620 235 Td (Step 4: Human-in-loop) Tj 620 220 Td (1-Click Approve) Tj
+
+0.4 0.4 0.4 rg /F1 10 Tf 50 120 Td (Safety Rule: If Battery < 5%, trigger dispatch_mobile_charger action automatically.) Tj
+0.4 0.4 0.4 rg /F1 10 Tf 50 100 Td (Fallback: If LLM times out > 3s, instantly degrade to manual dispatcher fallback screen.) Tj
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000010 00000 n 
+0000000059 00000 n 
+0000000118 00000 n 
+0000000247 00000 n 
+0000001050 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+1119
+%%EOF

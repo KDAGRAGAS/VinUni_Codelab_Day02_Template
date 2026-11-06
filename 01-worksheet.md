@@ -63,71 +63,86 @@ Hãy sử dụng **4 Lenses** dưới đây để quét qua hoạt động vận
 ### 📝 List bài toán của tôi:
 | # | Subsidiary (VinFast/Xanh SM...) | Lens | Mô tả ngắn bài toán |
 |---|----------------------------------|------|---------------------|
-| 1 | | | |
-| 2 | | | |
-| 3 | | | |
-| 4 | | | |
-| 5 | | | |
+| 1 | **Xanh SM (GSM)** | Tốn thời gian / Pain từ người khác | Hỗ trợ điều phối viên xử lý khẩn cấp sự cố sạc pin / xe sắp hết pin giữa đường (12-15 min/lượt). |
+| 2 | **VinFast** | AI có thể tốt hơn | Chẩn đoán ban đầu lỗi kỹ thuật xe qua mô tả tiếng Việt tự nhiên của khách hàng. |
+| 3 | **Vinhomes** | Lặp lại / Tốn thời gian | Phân loại và điều hướng phản ánh sự cố cư dân gửi qua App Vinhomes Resident (4-12 giờ). |
+| 4 | **Vinmec** | Tốn thời gian | Tự động hóa soạn thảo tóm tắt hồ sơ bệnh án xuất viện (Discharge Summary) (20-30 min/bệnh nhân). |
+| 5 | **Vinpearl** | Pain từ người khác | Quét review trên Booking/Agoda/Google Maps để cảnh báo các phàn nàn dịch vụ nghiêm trọng. |
 
 ---
 
 # 🃏 Phase 2 — QUICK-ASSESS (Cá nhân, 30 min)
 
-Chọn **top 3 bài toán** từ danh sách trên và hoàn thiện **3 Quick Problem Cards** dưới đây (10 phút/card).
+Chọn **top 3 bài toán** từ danh sách trên và hoàn thiện **3 Quick Problem Cards** (xem chi tiết tại [`01-problem-scan.md`](01-problem-scan.md)).
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│ QUICK PROBLEM CARD #___                                     │
+│ QUICK PROBLEM CARD #1 (Lựa chọn Deep-Dive)                  │
 │                                                             │
-│ Bài toán (1 câu): ________________________________________  │
-│ Công ty thành viên: [ ] VinFast  [ ] Xanh SM  [ ] Vinhomes  │
+│ Bài toán (1 câu): Hỗ trợ điều phối viên xử lý khẩn cấp sự   │
+│ cố hết pin và điều phối xe sạc di động cho tài xế Xanh SM. │
+│ Công ty thành viên: [ ] VinFast  [x] Xanh SM  [ ] Vinhomes  │
 │                     [ ] Vinmec   [ ] Khác (Ghi rõ)________  │
 │                                                             │
-│ Ai đang đau (Actor)? ______________________________________ │
+│ Ai đang đau (Actor)? Tài xế Xanh SM & Điều phối viên (Disp.) │
 │                                                             │
-│ Workflow thủ công hiện tại (3-5 bước):                      │
-│   1. ___ ──> 2. ___ ──> 3. ___ ──> 4. ___                   │
+│ Workflow thủ công hiện tại (5 bước):                        │
+│   1. Nhận báo ──> 2. Check GPS ──> 3. Tìm trạm ──> 4. SMS   │
+│   ──> 5. Điều xe cứu hộ nếu pin < 5%                       │
 │                                                             │
-│ Bước nào tốn thời gian/lỗi nhất? ___ (⏱ ___ phút/lượt)      │
-│ AI có thể nhảy vào hỗ trợ ở bước nào? _____________________ │
+│ Bước nào tốn thời gian/lỗi nhất? Bước 3 & 4 (⏱ 10 phút/lượt)│
+│ AI có thể nhảy vào hỗ trợ ở bước nào? Bước 3, 4, 5          │
 │                                                             │
-│ Đo thành công bằng gì (Metric có số)? ______________________ │
-│   VD: "Giảm thời gian soạn phản hồi từ 10 min ──> under 2 min"│
+│ Đo thành công bằng gì (Metric có số)?                        │
+│   - Giảm thời gian xử lý sự cố từ 15 min ──> under 3 min.   │
+│   - 100% ca pin < 5% không bị điều đi trạm xa (> 5km).      │
 │                                                             │
-│ Quick Architecture: [ ] No AI  [ ] Rule  [ ] LLM  [ ] Agent │
+│ Quick Architecture: [ ] No AI  [ ] Rule  [x] LLM  [ ] Agent │
 └─────────────────────────────────────────────────────────────┘
 ```
-
-> [!TIP]
-> **🤖 AI Prompts — Stress-Test thẻ bài toán:**
-> Hãy dán nội dung thẻ bài toán của bạn vào LLM để nhận phản biện:
-> *"Đây là một thẻ bài toán vận hành tôi đề xuất cho Vin Smart Future: [Dán nội dung]. Hãy đóng vai trò là một CFO và Trưởng phòng Vận hành cực kỳ khắt khe, chỉ ra cho tôi 3 điểm yếu về logic, metric, và giải thích vì sao rule-based code thông thường có thể giải quyết bài toán này tốt hơn là dùng AI."*
 
 ---
 
 # 🏗️ Phase 3 — DEEP-DIVE (Nhóm, 85 min)
 
+> 📑 **Chi tiết toàn bộ báo cáo chuyên sâu được lưu tại:** [`02-deep-dive-report.md`](02-deep-dive-report.md)  
+> 📊 **Sơ đồ quy trình As-Is vs To-Be:** [`04-workflow-diagram.pdf`](04-workflow-diagram.pdf)
+
 ## 3.1. Current-State Workflow Mapping (25 min)
-**Vẽ quy trình hiện tại lên bảng/giấy A3.** Sử dụng các ký hiệu:
-* 🔴 **Bottleneck:** Bước gây tắc nghẽn, tốn thời gian, hoặc sai sót nhiều nhất.
-* 🔄 **Handoff:** Điểm chuyển giao thông tin giữa người và hệ thống, hoặc giữa các bộ phận.
-* Ghi rõ thời gian vận hành trung bình: **Tổng cộng = ____ phút/lượt**.
+* 🔴 **Bottleneck:** Bước 3 (Tìm trạm sạc trống phù hợp) & Bước 4 (Soạn tin nhắn SMS/In-app hướng dẫn tài xế).
+* 🔄 **Handoff:** Chuyển giao thông tin từ tài xế ──> điều phối viên ──> đội xe cứu hộ sạc pin di động.
+* **Tổng thời gian vận hành trung bình:** **15 phút/lượt**.
 
 ## 3.2. Problem Statement (6-field) & Metrics (15 min)
-Điền đầy đủ 6 trường thông tin của bài toán:
 
 | Field | Nội dung chi tiết |
 |---|---|
-| **1. Actor / Operator** | Ai đang thực hiện tác vụ hằng ngày? |
-| **2. Current Workflow** | Mô tả tóm tắt quy trình thủ công hiện tại và công cụ sử dụng. |
-| **3. Bottleneck** | Bước nào chậm, lỗi, hoặc cần xử lý ngôn ngữ tự động nhiều nhất? |
-| **4. Business Impact** | Tổn thất thực tế đo bằng thời gian, chi phí, hoặc SLA của Vingroup. |
-| **5. Success Metric** | AI giải quyết được thì đạt ngưỡng số mấy? (Ví dụ: *"85% vé được phân loại dưới 10s"*). |
-| **6. Operational Boundary** | AI được phép làm gì, TUYỆT ĐỐI không được làm gì, điểm nào cần duyệt? |
+| **1. Actor / Operator** | Điều phối viên (Dispatcher) thuộc Trung tâm Điều vận Xanh SM (GSM). |
+| **2. Current Workflow** | Khi tài xế báo pin yếu, điều phối viên tra GPS xe, mở bản đồ tìm trụ sạc VinFast trống phù hợp, soạn tin SMS chỉ đường, gọi cứu hộ nếu pin < 5% (5 bước thủ công, mất 15 min/lượt). |
+| **3. Bottleneck** | Bước 3 & Bước 4: Mất 10 phút tra cứu đối chiếu trụ sạc trống và soạn tin nhắn hướng dẫn bằng tiếng Việt. |
+| **4. Business Impact** | ~80 sự cố pin/ngày tại Hà Nội; lãng phí ~20 giờ làm việc/ngày của điều phối viên; rò rỉ ~15% doanh thu đón khách giờ cao điểm. |
+| **5. Success Metric** | 1. Giảm thời gian xử lý từ 15 phút xuống dưới 3 phút/lượt.<br>2. 0 trường hợp xe pin < 5% bị hướng dẫn đi trạm xa (> 5km) gây chết máy giữa đường. |
+| **6. Operational Boundary** | AI được phép truy xuất GPS, trạm sạc trống và soạn draft tin nhắn. **CẤM:** Tuyệt đối không tự ý gửi tin nếu thiếu nhãn `[DRAFT_ONLY]` (bắt buộc Human-in-the-loop); nếu pin < 5% cấm chỉ trạm xa, bắt buộc kích hoạt `dispatch_mobile_charger`. |
 
 ## 3.3. Future-State Flow & AI Fit (25 min)
-* **Xác định mức AI Fit (AI-Fit Matrix):** Giải pháp thuộc nhóm nào? [ ] Rule / State-Machine [ ] LLM Feature [ ] Agentic Loop.
-* **Vẽ Future-State Flow:** Đánh dấu rõ:
+* **Xác định mức AI Fit (AI-Fit Matrix):** **[x] LLM Feature (Co-pilot)**.
+* **Thời gian xử lý mới:** ~1.5 đến 2 phút/lượt (tiết kiệm >85% thời gian).
+* **Cơ chế Fallback:** Nếu LLM API gặp sự cố timeout (> 3s), hệ thống tự động fallback về màn hình thao tác thủ công truyền thống.
+
+---
+
+# 💻 Phase 4 — Prompt Prototype & Testing (Cá nhân, 30 min)
+
+* Mã nguồn nguyên mẫu kỹ thuật: [`starter-code/prompt_prototype.py`](starter-code/prompt_prototype.py)
+* Đã cấu hình và kiểm thử thành công bằng Gemini 2.5 Flash SDK.
+* Vượt qua toàn bộ các Adversarial Test Cases (Bảo vệ thẻ `[DRAFT_ONLY]` và ngưỡng pin `< 5%`).
+* Điểm tự động Autograder: **10.00 / 10.00 điểm (100% PASS)**.
+
+---
+
+# 📝 Phase 5 — Reflection & AI Log (Cá nhân, 15 min)
+
+* Chi tiết nhật ký tương tác và bài học rút ra được lưu tại: [`03-ai-log.md`](03-ai-log.md)
   * 🔵 **AI Step:** Tác vụ LLM xử lý.
   * 🟢 **Human Step (HITL):** Bước con người phê duyệt/review (Human-in-the-loop).
   * ↩️ **Fallback:** Kế hoạch dự phòng khi LLM trả về kết quả lỗi hoặc không tự tin.
