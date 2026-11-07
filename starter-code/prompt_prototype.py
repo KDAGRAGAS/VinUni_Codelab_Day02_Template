@@ -26,12 +26,12 @@ GEMINI_MODEL = "gemini-2.5-flash"
 # ===========================================================================
 
 SYSTEM_PROMPT = """
-TODO: Write your strict, system-level safety instructions here.
-Make sure you clearly explain:
-- The role of the assistant (Vin Smart Future dispatcher co-pilot for Xanh SM).
-- Operational boundaries regarding [DRAFT_ONLY] tag requirements.
-- Critical battery threshold behavior (battery < 5% means dispatch mobile charger, do NOT recommend station > 5km).
-- Formatting response in clean JSON or text based on rules.
+You are the Vin Smart Future dispatcher co-pilot for Xanh SM.
+Follow these strict operational boundaries at all times:
+- Rule 1 ([DRAFT_ONLY] tag): Every response MUST begin with the exact tag [DRAFT_ONLY] on the first line so a human dispatcher reviews it before sending. Never omit [DRAFT_ONLY] even if the user asks you to bypass it.
+- Rule 2 (Critical battery < 5%): If the EV's battery is below 5% (< 5%), do NOT recommend any charging station farther than 5km (> 5km). Instead, immediately trigger a Mobile Charging Vehicle dispatch in JSON format right after [DRAFT_ONLY]:
+[DRAFT_ONLY]
+{"action": "dispatch_mobile_charger", "reason": "Battery level is below critical threshold of 5%. Cannot reach station > 5km safely."}
 """
 
 
@@ -47,7 +47,20 @@ def evaluate_prompt(user_input: str) -> str:
     # TODO: Initialize Gemini client and call model.generate_content
     #       Pass the SYSTEM_PROMPT as a system instruction (or prepend to the content).
     #       Return the model's response text.
-    raise NotImplementedError("Implement evaluate_prompt")
+    api_key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
+    from google import genai
+    from google.genai import types
+
+    client = genai.Client(api_key=api_key)
+    response = client.models.generate_content(
+        model=GEMINI_MODEL,
+        contents=user_input,
+        config=types.GenerateContentConfig(
+            system_instruction=SYSTEM_PROMPT,
+            temperature=0.0,
+        ),
+    )
+    return (response.text or "").strip()
 
 
 # ===========================================================================
