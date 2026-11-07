@@ -38,33 +38,43 @@ def get_student_module_or_exit():
         sys.exit(1)
 
 def check_file_exists(filename_pattern, search_dir="."):
-    """Kiểm tra sự tồn tại của một file (hỗ trợ kiểm tra phần mở rộng)."""
-    if not filename_pattern.startswith("*."):
-        path = os.path.join(search_dir, filename_pattern)
-        return os.path.exists(path), path
+    """Tìm file ở thư mục yêu cầu hoặc src/ (hỗ trợ phần mở rộng)."""
+    for directory in (search_dir, os.path.join(search_dir, "src")):
+        if not os.path.isdir(directory):
+            continue
+        if not filename_pattern.startswith("*."):
+            path = os.path.join(directory, filename_pattern)
+            if os.path.isfile(path):
+                return True, path
+            continue
 
-    extension = filename_pattern.replace("*", "")
-    for file in os.listdir(search_dir):
-        if file.lower().endswith(extension.lower()):
-            return True, os.path.join(search_dir, file)
+        extension = filename_pattern.replace("*", "")
+        for file in os.listdir(directory):
+            path = os.path.join(directory, file)
+            if file.lower().endswith(extension.lower()) and os.path.isfile(path):
+                return True, path
     return False, None
 
 def check_workflow_diagram(search_dir="."):
-    """Kiểm tra file sơ đồ với nhiều định dạng ảnh/tài liệu khác nhau."""
+    """Tìm sơ đồ ở thư mục yêu cầu hoặc src/ với các định dạng hợp lệ."""
     valid_extensions = [".png", ".jpg", ".jpeg", ".pdf"]
     base_name = "04-workflow-diagram"
     
-    for ext in valid_extensions:
-        filename = f"{base_name}{ext}"
-        path = os.path.join(search_dir, filename)
-        if os.path.exists(path):
-            return True, path
-            
-    for file in os.listdir(search_dir):
-        if file.lower().startswith(base_name.lower()):
-            _, ext = os.path.splitext(file)
-            if ext.lower() in valid_extensions:
-                return True, os.path.join(search_dir, file)
+    for directory in (search_dir, os.path.join(search_dir, "src")):
+        if not os.path.isdir(directory):
+            continue
+        for ext in valid_extensions:
+            filename = f"{base_name}{ext}"
+            path = os.path.join(directory, filename)
+            if os.path.isfile(path):
+                return True, path
+
+        for file in os.listdir(directory):
+            if file.lower().startswith(base_name.lower()):
+                _, ext = os.path.splitext(file)
+                path = os.path.join(directory, file)
+                if ext.lower() in valid_extensions and os.path.isfile(path):
+                    return True, path
                 
     return False, None
 
